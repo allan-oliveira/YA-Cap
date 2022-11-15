@@ -6,7 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>   
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.CAP" Version="6.2.1" />
+    <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="6.2.1" />
+    <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="6.0.0" />     
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
