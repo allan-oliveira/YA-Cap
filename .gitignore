@@ -1,0 +1,17 @@
+# TypeScript project
+node_modules
+
+# .Net project
+bin
+obj
+
+# Docker
+.docker
+
+# UI
+#Quickstart
+#Views
+#wwwroot
+*.user
+.vs/
+.vscode/
