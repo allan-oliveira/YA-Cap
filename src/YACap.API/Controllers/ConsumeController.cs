@@ -1,15 +1,23 @@
 using DotNetCore.CAP;
+using DotNetCore.CAP.Messages;
 using Microsoft.AspNetCore.Mvc;
+using YACap.Data;
 
 namespace YACap.API.Controllers;
 public class ConsumerController : Controller
 {
     [NonAction]
-    [CapSubscribe("test.show.time")]
-    public void ReceiveMessage(DateTime time, [FromCap] CapHeader header)
+    [CapSubscribe("test.show.time", Group = "group1")]
+    public void ReceiveMessage(Person p)
     {
-        Console.WriteLine("message time is:" + time);
-        Console.WriteLine("message firset header :" + header["my.header.first"]);
-        Console.WriteLine("message second header :" + header["my.header.second"]);
+        Console.WriteLine($@"{DateTime.Now} Subscriber invoked, Info: {p}");
+    }
+
+    [NonAction]
+    [CapSubscribe("test.show.time", Group = "group1")]
+    public void ReceiveMessage2(Person p, [FromCap] CapHeader header)
+    {
+        var id = header[Headers.MessageId];
+        Console.WriteLine($@"{DateTime.Now} Subscriber invoked, Info: {p}");
     }
 }

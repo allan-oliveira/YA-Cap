@@ -1,21 +1,30 @@
 using DotNetCore.CAP;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using YACap.Data;
 
 namespace YACap.API.Controllers;
 
 public class PublishController : Controller
 {
-    [Route("~/send")]
-    public IActionResult SendMessage([FromServices] ICapPublisher capBus)
+    private readonly ICapPublisher _capBus;
+    private readonly AppDbContext _dbContext;
+    public PublishController(ICapPublisher capPublisher, AppDbContext dbContext)
     {
-        var header = new Dictionary<string, string>()
+        _capBus = capPublisher;
+        _dbContext = dbContext;
+    }
+
+    [Route("~/send")]
+    public IActionResult SendMessage()
+    {
+        using (_dbContext.Database.BeginTransaction(_capBus, autoCommit: true))
         {
-            ["my.header.first"] = "first",
-            ["my.header.second"] = "second"
-        };
-
-        capBus.Publish("test.show.time", DateTime.Now, header);
-
+            var person = new Person() { Name = "Foo" };
+            _dbContext.Persons.Add(person);
+            _dbContext.SaveChanges();
+            _capBus.Publish("test.show.time", person);
+        }
         return Ok();
     }
 }

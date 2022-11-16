@@ -1,8 +1,16 @@
 using Savorboard.CAP.InMemoryMessageQueue;
+using Microsoft.EntityFrameworkCore;
+using YACap.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+    });
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -11,8 +19,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCap(x =>
 {
-    x.UseInMemoryStorage();
+    x.UseEntityFramework<AppDbContext>();
     x.UseInMemoryMessageQueue();
+    x.UseDashboard();
 });
 
 var app = builder.Build();
