@@ -7,17 +7,9 @@ namespace YACap.API.Controllers;
 public class ConsumerController : Controller
 {
     [NonAction]
-    [CapSubscribe("test.show.time", Group = "group1")]
+    [CapSubscribe("user.cmd.create", Group = "user-create-queue")]
     public void ReceiveMessage(Person p)
     {
-        Console.WriteLine($@"{DateTime.Now} Subscriber invoked, Info: {p}");
-    }
-
-    [NonAction]
-    [CapSubscribe("test.show.time", Group = "group1")]
-    public void ReceiveMessage2(Person p, [FromCap] CapHeader header)
-    {
-        var id = header[Headers.MessageId];
         Console.WriteLine($@"{DateTime.Now} Subscriber invoked, Info: {p}");
     }
 }

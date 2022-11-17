@@ -23,7 +23,7 @@ public class PublishController : Controller
             var person = new Person() { Name = "Foo" };
             _dbContext.Persons.Add(person);
             _dbContext.SaveChanges();
-            _capBus.Publish("test.show.time", person);
+            _capBus.Publish("user.cmd.create", person);
         }
         return Ok();
     }

@@ -1,4 +1,4 @@
-USE master
+USE master;
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'YACap')
@@ -11,7 +11,7 @@ USE [YACap];
 GO
 
 
-IF OBJECT_ID('MyTestTable', 'U') IS NULL
+IF OBJECT_ID('Persons', 'U') IS NULL
 BEGIN
   CREATE TABLE [Persons]
   (

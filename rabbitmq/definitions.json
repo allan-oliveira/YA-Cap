@@ -1,0 +1,112 @@
+{
+    "exchanges": [
+        {
+            "name": "user",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false
+        }
+    ],
+    "queues": [
+        {
+            "name": "user-create-queue.v1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {
+                "x-message-ttl": 864000000
+            }
+        },
+        {
+            "name": "user-created-queue.v1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {
+                "x-message-ttl": 864000000
+            }
+        },
+        {
+            "name": "user-updated-queue.v1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {
+                "x-message-ttl": 864000000
+            }
+        },
+        {
+            "name": "user-deleted-queue.v1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {
+                "x-message-ttl": 864000000
+            }
+        }
+    ],
+    "bindings": [
+        {
+            "source": "user",
+            "vhost": "/",
+            "destination": "user-create-queue.v1",
+            "destination_type": "queue",
+            "routing_key": "user.cmd.create",
+            "arguments": {}
+        },
+        {
+            "source": "user",
+            "vhost": "/",
+            "destination": "user-created-queue.v1",
+            "destination_type": "queue",
+            "routing_key": "user.event.created",
+            "arguments": {}
+        },
+        {
+            "source": "user",
+            "vhost": "/",
+            "destination": "user-updated-queue.v1",
+            "destination_type": "queue",
+            "routing_key": "user.event.updated",
+            "arguments": {}
+        },
+        {
+            "source": "user",
+            "vhost": "/",
+            "destination": "user-deleted-queue.v1",
+            "destination_type": "queue",
+            "routing_key": "user.event.deleted",
+            "arguments": {}
+        }
+    ],
+    "users": [
+        {
+            "name": "guest",
+            "password_hash": "BMfxN8drrYcIqXZMr+pWTpDT0nMcOagMduLX0bjr4jwud/pN",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": [
+                "administrator"
+            ],
+            "limits": {}
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "guest",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ]
+}

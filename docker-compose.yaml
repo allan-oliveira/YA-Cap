@@ -22,6 +22,15 @@ services:
     depends_on:
       - sqlserver
     volumes:
-      - ./init-db.sql:/tmp/init-db.sql
-      - ./entrypoint.sh:/tmp/entrypoint.sh
+      - ./sqlserver/init-db.sql:/tmp/init-db.sql
+      - ./sqlserver/entrypoint.sh:/tmp/entrypoint.sh
     command: /bin/bash ./tmp/entrypoint.sh
+
+  rabbitmq:
+      image: rabbitmq:3.11-management
+      ports:
+          - 5672:5672
+          - 15672:15672
+      volumes:
+          - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+          - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
